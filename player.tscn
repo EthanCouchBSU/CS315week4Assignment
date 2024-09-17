@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://6om5gcl2bd5a"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_16yil"]
+[ext_resource type="Texture2D" uid="uid://cnhd3wyevhr2y" path="res://tappyplane/PNG/Planes/planeBlue1.png" id="2_qnmcv"]
+[ext_resource type="Texture2D" uid="uid://bco41dvpp2wp2" path="res://tappyplane/PNG/Planes/planeBlue2.png" id="3_8oyn6"]
+[ext_resource type="Texture2D" uid="uid://eg8too6t3cqn" path="res://tappyplane/PNG/Planes/planeBlue3.png" id="4_x6n0y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3bm2a"]
+radius = 51.4781
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lie05"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qnmcv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8oyn6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_x6n0y")
+}],
+"loop": false,
+"name": &"flap",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qnmcv")
+}],
+"loop": false,
+"name": &"glide",
+"speed": 5.0
+}]
+
+[node name="player" type="RigidBody2D" node_paths=PackedStringArray("_animated_sprite")]
+gravity_scale = 2.0
+script = ExtResource("1_16yil")
+_animated_sprite = NodePath("AnimatedSprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3bm2a")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_lie05")
+animation = &"flap"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
